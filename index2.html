@@ -30,25 +30,54 @@
             <option class="parselOption" value="Point">Point</option>
             <option class="parselOption" value="LineString">LineString</option>
         </select>
-
+        <table>
+            <tr>
+                <th
+                    style="font-style: normal; font-size: 20px; font-weight: normal; border: 2px solid teal; width: 120px; height: 40px; padding: 20px;">
+                    City</th>
+                <th
+                    style="font-style: normal; font-size: 20px; font-weight: normal; border: 2px solid teal; width: 120px; height: 40px;padding: 20px;">
+                    Town</th>
+                <th
+                    style="font-style: normal; font-size: 20px; font-weight: normal; border: 2px solid teal; width: 120px; height: 40px;padding: 20px;">
+                    Neigbourhood</th>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
         <div id="myModal" class="modal">
-
             <!-- Modal content -->
             <div class="modal-content">
                 <div class="modal-header">
                     <span class="close">&times;</span>
                     <p>City</p>
+                    <form> <label for="City"></label><br>
+                        <input type="text" id="City" name="City"><br>
+                    </form>
                 </div>
                 <div class="modal-header">
                     <p>Town</p>
+                    <form> <label for="Town"></label><br>
+                        <input type="text" id="Town" name="Town"><br>
+                    </form>
                 </div>
                 <div class="modal-header">
                     <p>Neigbourhood</p>
+                    <form> <label for="Neigbourhood"></label><br>
+                        <input type="text" id="Neigbourhood" name="Neigbourhood"><br>
+                    </form>
                 </div>
                 <div id="Save">Save</div>
             </div>
         </div>
-
 </body>
 
 <script src="main.js" type="text/javascript"></script>
