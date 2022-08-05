@@ -11,6 +11,7 @@
         href="https://media-exp1.licdn.com/dms/image/C560BAQEnlb0HPWt_DA/company-logo_200_200/0/1522420792119?e=2159024400&v=beta&t=Hr56rqJZN_JApaLmrJ9QLFMqxrH4QN5dXliCJ5Eh42Y">
     <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.9.0/build/ol.js"> </script>
 </head>
+<link rel="stylesheet" href="node_modules/ol/ol.css">
 
 <body>
     <div>
@@ -23,12 +24,33 @@
         </div>
         <div id="map"></div>
         <label for="type" class="parselTypeLabel">Geometry type:</label>
-    <select class="parselBtn" id="type">
-        <option class="parselOption" value="Polygon">Polygon</option>
-        <option class="parselOption" value="Point">Point</option>
-        <option class="parselOption" value="LineString">LineString</option>
-    </select>
+        <select class="parselBtn" id="type">
+            <option class="parselOption" value=""></option>
+            <option class="parselOption" value="Polygon">Polygon</option>
+            <option class="parselOption" value="Point">Point</option>
+            <option class="parselOption" value="LineString">LineString</option>
+        </select>
+
+        <div id="myModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close">&times;</span>
+                    <p>City</p>
+                </div>
+                <div class="modal-header">
+                    <p>Town</p>
+                </div>
+                <div class="modal-header">
+                    <p>Neigbourhood</p>
+                </div>
+                <div id="Save">Save</div>
+            </div>
+        </div>
+
 </body>
+
 <script src="main.js" type="text/javascript"></script>
 
 </html>

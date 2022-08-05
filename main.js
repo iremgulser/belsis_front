@@ -30,8 +30,8 @@ var map = new ol.Map({
     target: 'map',
     layers: [raster, vector],
     view: new ol.View({
-        center: ol.proj.fromLonLat([37.41, 8.82]),
-        zoom: 0
+        center: ol.proj.fromLonLat([37, 39]),
+        zoom: 6
     })
 });
 
@@ -47,6 +47,10 @@ typeSelect.onchange = function () {
     map.un('click', callBack)
 };
 
+function callBack() {
+
+}
+
 function addInteractions() {
     draw = new ol.interaction.Draw({
         source: source,
@@ -56,4 +60,36 @@ function addInteractions() {
     snap = new ol.interaction.Snap({ source: source });
     map.addInteraction(snap);
     draw.on('drawend', drawend);
+}
+function drawend() {
+    modal.style.display = "block";
+}
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function () {
+    modal.style.display = "none";
+    deleteparsel()
+}
+function deleteparsel() {
+    var datas = source.getFeatures()
+    source.removeFeature(datas[datas.length - 1])
+
+    modal.style.display = "none";
+}
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+        deleteparsel()
+    }
+}
+
+var Save = document.getElementById("Save");
+Save.onclick = function () {
+    modal.style.display = "none";
 }
