@@ -8,16 +8,16 @@ const source = new ol.source.Vector();
 const vector = new ol.layer.Vector({
     source: source,
     style: new ol.style.Style({
-        fill: new ol.style.Fill({ //polygon icin
+        fill: new ol.style.Fill({ //polygon
             color: 'rgba(255, 255, 255, 0.5)',
         }),
-        stroke: new ol.style.Stroke({ //dis cizgiler icin
+        stroke: new ol.style.Stroke({ //line
             color: 'red',
             width: 2,
         }),
         image: new ol.style.Circle({
             radius: 7,
-            fill: new ol.style.Fill({ //point icin
+            fill: new ol.style.Fill({ //point
                 color: '#ffcc33',
             }),
         }),
@@ -73,23 +73,93 @@ var span = document.getElementsByClassName("close")[0];
 // When the user clicks on <span> (x), close the modal
 span.onclick = function () {
     modal.style.display = "none";
-    deleteparsel()
+    DELETEParcel()
 }
-function deleteparsel() {
+function DELETEParcel() {
     var datas = source.getFeatures()
     source.removeFeature(datas[datas.length - 1])
 
     modal.style.display = "none";
 }
-// When the user clicks anywhere outside of the modal, close it
+// When clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
     if (event.target == modal) {
         modal.style.display = "none";
-        deleteparsel()
+        DELETEParcel()
     }
+}
+
+
+
+function POST(data) {
+    $.ajax({
+        type: "POST",
+        url: "https://localhost:5001/api/Parcel",
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        dataType: 'JSON',
+        success: function (e) {
+            $('#myTable tbody').append('<tr><td>' + e + '</td><td>' + data.City + '</td></tr>');
+        },
+    });
+}
+
+function DELETE(data) {
+    $.ajax({
+        type: 'DELETE',
+        url: 'https://localhost:5001/api/Parcel',
+        dataType: 'JSON',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function () {
+            alert("Parcellation was deleted.");
+        }
+    })
+}
+
+function UPDATE(data) {
+    $.ajax({
+        type: 'DELETE',
+        url: 'https://localhost:5001/api/Parcel',
+        dataType: 'JSON',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function () {
+            alert("Parcellation was updated.");
+        }
+    })
+}
+
+function GET() {
+    $.ajax({
+        type: 'GET',
+        url: 'https://localhost:5001/api/Parcel',
+        dataType: 'JSON',
+        contentType: 'application/json',
+        success: function (data) {
+            if (data) {
+                data.forEach(function (e) { $('#myTable tbody').append('<tr><td>' + e.id + '</td><td>' + e.city + '</td></tr>'); });
+            }
+            // $('#myTable tbody').append('<tr><td>' + e + '</td><td>' + data.City + '</td></tr>');
+
+        }
+    });
 }
 
 var Save = document.getElementById("Save");
 Save.onclick = function () {
+    var data = {
+        "id": 0,
+        "City": $("#City").val(),
+        "Town": $("#Town").val(),
+        "Neighbourhood": $("#Neighbourhood").val(),
+    }
     modal.style.display = "none";
+
+
+
+
+    POST(data);
 }
+
+GET();

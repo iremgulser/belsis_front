@@ -10,8 +10,9 @@
         <link
         href="https://media-exp1.licdn.com/dms/image/C560BAQEnlb0HPWt_DA/company-logo_200_200/0/1522420792119?e=2159024400&v=beta&t=Hr56rqJZN_JApaLmrJ9QLFMqxrH4QN5dXliCJ5Eh42Y">
     <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.9.0/build/ol.js"> </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
-<link rel="stylesheet" href="node_modules/ol/ol.css">
+
 
 <body>
     <div>
@@ -30,29 +31,27 @@
             <option class="parselOption" value="Point">Point</option>
             <option class="parselOption" value="LineString">LineString</option>
         </select>
+
         <table>
             <tr>
                 <th
-                    style="font-style: normal; font-size: 20px; font-weight: normal; border: 2px solid teal; width: 120px; height: 40px; padding: 20px;">
+                    style="font-style: normal; font-size: 20px; font-weight: normal; border: 2px solid teal; width: 80px; height: 40px; padding: 20px;">
                     City</th>
                 <th
-                    style="font-style: normal; font-size: 20px; font-weight: normal; border: 2px solid teal; width: 120px; height: 40px;padding: 20px;">
+                    style="font-style: normal; font-size: 20px; font-weight: normal; border: 2px solid teal; width: 80px; height: 40px;padding: 20px;">
                     Town</th>
                 <th
-                    style="font-style: normal; font-size: 20px; font-weight: normal; border: 2px solid teal; width: 120px; height: 40px;padding: 20px;">
+                    style="font-style: normal; font-size: 20px; font-weight: normal; border: 2px solid teal; width: 80px; height: 40px;padding: 20px;">
                     Neigbourhood</th>
             </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
         </table>
+        <table id="myTable">
+            <tbody>
+              <tr>...</tr>
+              <tr>...</tr>
+            </tbody>
+          </table>
+
         <div id="myModal" class="modal">
             <!-- Modal content -->
             <div class="modal-content">
@@ -70,9 +69,9 @@
                     </form>
                 </div>
                 <div class="modal-header">
-                    <p>Neigbourhood</p>
-                    <form> <label for="Neigbourhood"></label><br>
-                        <input type="text" id="Neigbourhood" name="Neigbourhood"><br>
+                    <p>Neighbourhood</p>
+                    <form> <label for="Neighbourhood"></label><br>
+                        <input type="text" id="Neighbourhood" name="Neighbourhood"><br>
                     </form>
                 </div>
                 <div id="Save">Save</div>
