@@ -30,8 +30,8 @@ var map = new ol.Map({
     target: 'map',
     layers: [raster, vector],
     view: new ol.View({
-        center: ol.proj.fromLonLat([37, 39]),
-        zoom: 6
+        center: ol.proj.fromLonLat([38, 39]),
+        zoom: 5.8,
     })
 });
 
@@ -68,6 +68,7 @@ function drawend() {
 // Get the modal
 var modal = document.getElementById("addModal");
 
+
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
@@ -76,6 +77,7 @@ span.onclick = function () {
     modal.style.display = "none";
     DELETEParcel()
 }
+
 function DELETEParcel() {
     var datas = source.getFeatures()
     source.removeFeature(datas[datas.length - 1])
@@ -97,15 +99,13 @@ function removeRow(id) {
     $("#" + id).remove();
 
 }
-function editwindow() {
-    modal.style.display = "block";
+
+var Editid = 0;
+function editwindow(id) {
+    $("#updateModal").show();
+    Editid = id;
+
 }
-function updateList() {
-
-
-
-}
-
 
 function POST(data) {
     $.ajax({
@@ -126,23 +126,22 @@ function DELETE(id) {
         url: 'https://localhost:5001/api/Parcel/' + id,
         success: function () {
             removeRow(id);
-            alert("Parcellation was removed.")
+            alert("The parcel has been removed.")
         }
     })
 }
 
-function UPDATE(data) {
+function PUT(data) {
     $.ajax({
-        type: 'DELETE',
-        url: 'https://localhost:5001/api/Parcel',
+        type: 'PUT',
+        url: 'https://localhost:5001/api/Parcel/' + data.id,
         dataType: 'JSON',
         contentType: 'application/json',
         data: JSON.stringify(data),
-        success: function () {
 
-        }
     })
 }
+
 
 
 function GET() {
@@ -164,17 +163,30 @@ function GET() {
     });
 }
 
-var Save = document.getElementById("Save");
-Save.onclick = function () {
+var Add = document.getElementById("Add");
+Add.onclick = function () {
     var data = {
         "id": 0,
-        "city": $("#city").val(),
-        "town": $("#town").val(),
-        "neighbourhood": $("#neighbourhood").val(),
+        "city": $("#addModal #city").val(),
+        "town": $("#addModal #town").val(),
+        "neighbourhood": $("#addModal #neighbourhood").val(),
     }
     modal.style.display = "none";
 
     POST(data);
+}
+
+var Update = document.getElementById("Update");
+Update.onclick = function () {
+    var data = {
+        "id": Editid,
+        "city": $("#updateModal #city").val(),
+        "town": $("#updateModal #town").val(),
+        "neighbourhood": $("#updateModal #neighbourhood").val(),
+    }
+    $("#updateModal").hide();
+
+    PUT(data);
 }
 
 GET();

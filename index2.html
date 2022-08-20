@@ -17,10 +17,10 @@
 <body>
     <div>
         <div>
-            <div>
-                <img
-                    src="https://media-exp1.licdn.com/dms/image/C560BAQEnlb0HPWt_DA/company-logo_200_200/0/1522420792119?e=2159024400&v=beta&t=Hr56rqJZN_JApaLmrJ9QLFMqxrH4QN5dXliCJ5Eh42Y" />
-            </div>
+            <img
+                src="https://media-exp1.licdn.com/dms/image/C560BAQEnlb0HPWt_DA/company-logo_200_200/0/1522420792119?e=2159024400&v=beta&t=Hr56rqJZN_JApaLmrJ9QLFMqxrH4QN5dXliCJ5Eh42Y" />
+        </div>
+        <div>
             <h2 class="header">Belsis Yazılım</h2>
         </div>
         <div id="map"></div>
@@ -65,7 +65,32 @@
                         <input type="text" id="neighbourhood" name="Neighbourhood"><br>
                     </form>
                 </div>
-                <div id="Save">Save</div>
+                <div id="Add">Add</div>
+            </div>
+        </div>
+
+        <div id="updateModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p>City</p>
+                    <form> <label for="City"></label><br>
+                        <input type="text" id="city" name="City"><br>
+                    </form>
+                </div>
+                <div class="modal-header">
+                    <p>Town</p>
+                    <form> <label for="Town"></label><br>
+                        <input type="text" id="town" name="Town"><br>
+                    </form>
+                </div>
+                <div class="modal-header">
+                    <p>Neighbourhood</p>
+                    <form> <label for="Neighbourhood"></label><br>
+                        <input type="text" id="neighbourhood" name="Neighbourhood"><br>
+                    </form>
+                </div>
+                <div id="Update">Update</div>
             </div>
         </div>
 </body>
