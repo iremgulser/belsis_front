@@ -30,8 +30,8 @@ var map = new ol.Map({
     target: 'map',
     layers: [raster, vector],
     view: new ol.View({
-        center: ol.proj.fromLonLat([37, 39]),
-        zoom: 6
+        center: ol.proj.fromLonLat([38, 39]),
+        zoom: 5.8,
     })
 });
 
@@ -64,8 +64,10 @@ function addInteractions() {
 function drawend() {
     modal.style.display = "block";
 }
+
 // Get the modal
-var modal = document.getElementById("myModal");
+var modal = document.getElementById("addModal");
+
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
@@ -75,6 +77,7 @@ span.onclick = function () {
     modal.style.display = "none";
     DELETEParcel()
 }
+
 function DELETEParcel() {
     var datas = source.getFeatures()
     source.removeFeature(datas[datas.length - 1])
@@ -89,46 +92,57 @@ window.onclick = function (event) {
     }
 }
 
+function addNewRow(id, city, town, neighbourhood) {
+    $("table").append(" <tr id='" + id + "'><td>" + id + "</td><td>" + city + "</td><td>" + town + "</td><td>" + neighbourhood + "</td><td><button type='button' onclick='editwindow(" + id + ")'>Edit</button></td><td><button type='button' onclick='DELETE(" + id + ")'>Delete</button></td></tr>");
+}
+function removeRow(id) {
+    $("#" + id).remove();
 
+}
+
+var Editid = 0;
+function editwindow(id) {
+    $("#updateModal").show();
+    Editid = id;
+
+}
 
 function POST(data) {
     $.ajax({
         type: "POST",
-        url: "https://localhost:5001/api/Parcel",
+        url: "https://localhost:5001/api/Parcel/",
         contentType: 'application/json',
         data: JSON.stringify(data),
         dataType: 'JSON',
-        success: function (e) {
-            $('#myTable tbody').append('<tr><td>' + e + '</td><td>' + data.City + '</td></tr>');
+        success: function (id) {
+            addNewRow(id, data.city, data.town, data.neighbourhood);
         },
     });
 }
 
-function DELETE(data) {
+function DELETE(id) {
     $.ajax({
         type: 'DELETE',
-        url: 'https://localhost:5001/api/Parcel',
-        dataType: 'JSON',
-        contentType: 'application/json',
-        data: JSON.stringify(data),
+        url: 'https://localhost:5001/api/Parcel/' + id,
         success: function () {
-            alert("Parcellation was deleted.");
+            removeRow(id);
+            alert("The parcel has been removed.")
         }
     })
 }
 
-function UPDATE(data) {
+function PUT(data) {
     $.ajax({
-        type: 'DELETE',
-        url: 'https://localhost:5001/api/Parcel',
+        type: 'PUT',
+        url: 'https://localhost:5001/api/Parcel/' + data.id,
         dataType: 'JSON',
         contentType: 'application/json',
         data: JSON.stringify(data),
-        success: function () {
-            alert("Parcellation was updated.");
-        }
+
     })
 }
+
+
 
 function GET() {
     $.ajax({
@@ -138,7 +152,10 @@ function GET() {
         contentType: 'application/json',
         success: function (data) {
             if (data) {
-                data.forEach(function (e) { $('#myTable tbody').append('<tr><td>' + e.id + '</td><td>' + e.city + '</td></tr>'); });
+                data.forEach(function (e) {
+                    addNewRow(e.id, e.city, e.town, e.neighbourhood);
+
+                });
             }
             // $('#myTable tbody').append('<tr><td>' + e + '</td><td>' + data.City + '</td></tr>');
 
@@ -146,20 +163,30 @@ function GET() {
     });
 }
 
-var Save = document.getElementById("Save");
-Save.onclick = function () {
+var Add = document.getElementById("Add");
+Add.onclick = function () {
     var data = {
         "id": 0,
-        "City": $("#City").val(),
-        "Town": $("#Town").val(),
-        "Neighbourhood": $("#Neighbourhood").val(),
+        "city": $("#addModal #city").val(),
+        "town": $("#addModal #town").val(),
+        "neighbourhood": $("#addModal #neighbourhood").val(),
     }
     modal.style.display = "none";
 
-
-
-
     POST(data);
+}
+
+var Update = document.getElementById("Update");
+Update.onclick = function () {
+    var data = {
+        "id": Editid,
+        "city": $("#updateModal #city").val(),
+        "town": $("#updateModal #town").val(),
+        "neighbourhood": $("#updateModal #neighbourhood").val(),
+    }
+    $("#updateModal").hide();
+
+    PUT(data);
 }
 
 GET();
