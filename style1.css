@@ -108,3 +108,10 @@
 
 }
 
+th, td {
+  border: 1.5px solid white;
+  border-color: teal;
+  width: 50%;
+  height: 75%;
+  padding:10px;
+}
