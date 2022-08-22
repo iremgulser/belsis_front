@@ -1,3 +1,4 @@
+var wktFortmat = new ol.format.WKT()
 
 const raster = new ol.layer.Tile({
     source: new ol.source.OSM(),
@@ -69,8 +70,10 @@ function drawend() {
 var modal = document.getElementById("addModal");
 
 
+
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
+
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function () {
@@ -115,7 +118,7 @@ function POST(data) {
         data: JSON.stringify(data),
         dataType: 'JSON',
         success: function (id) {
-            addNewRow(id, data.city, data.town, data.neighbourhood);
+            addNewRow(id, data.city, data.town, data.neighbourhood, data.wkt);
         },
     });
 }
@@ -155,6 +158,11 @@ function GET() {
             if (data) {
                 data.forEach(function (e) {
                     addNewRow(e.id, e.city, e.town, e.neighbourhood);
+                    const parcel = wktFortmat.readFeature(e.wktString, {
+                        dataProjection: 'EPSG:3857',
+                        featureProjection: 'EPSG:3857',
+                    });
+                    source.addFeature(parcel)
 
                 });
             }
@@ -166,16 +174,43 @@ function GET() {
 
 var Add = document.getElementById("Add");
 Add.onclick = function () {
+    var datas = source.getFeatures()
+    const x = wktFortmat.writeFeature(datas[datas.length - 1])
+
     var data = {
         "id": 0,
         "city": $("#addModal #city").val(),
         "town": $("#addModal #town").val(),
         "neighbourhood": $("#addModal #neighbourhood").val(),
+        "WktString": x,
     }
     modal.style.display = "none";
 
     POST(data);
 }
+
+modify.on('modifyend', function (e) {
+    let editWktId = e.features.getArray()[0].A.parcelId
+    let editWktcity = e.features.getArray()[0].A.parcelcity
+    let editWkttown = e.features.getArray()[0].A.parceltown
+    let editWktneighbourhood = e.features.getArray()[0].A.pareselneighbourhood
+    let editWkt = wkt.writeFeature(e.features.getArray()[0])
+    let wktEditJson = { parcelId: editWktId, parceltown: editWktcity, parceltown: editWkttown, parcelneighbourhood: editWktneighbourhood, wktString: editWkt }
+    $.ajax({
+        type: "post",
+        url: "https://localhost:44393/api/parcel/update",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(wktEditJson),
+        success: successWktUpdate,
+        dataType: "json",
+    })
+});
+
+
+
+
+
+
 
 var Update = document.getElementById("Update");
 Update.onclick = function () {
