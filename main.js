@@ -123,6 +123,7 @@ function POST(data) {
 function DELETE(id) {
     $.ajax({
         type: 'DELETE',
+        contentType: 'application/json',
         url: 'https://localhost:5001/api/Parcel/' + id,
         success: function () {
             removeRow(id);
@@ -188,5 +189,6 @@ Update.onclick = function () {
 
     PUT(data);
 }
+
 
 GET();
